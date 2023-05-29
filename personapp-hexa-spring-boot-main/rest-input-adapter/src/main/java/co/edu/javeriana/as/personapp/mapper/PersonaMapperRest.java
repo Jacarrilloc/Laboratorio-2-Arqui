@@ -7,28 +7,29 @@ import co.edu.javeriana.as.personapp.model.response.PersonaResponse;
 
 @Mapper
 public class PersonaMapperRest {
-	
+
 	public PersonaResponse fromDomainToAdapterRestMaria(Person person) {
 		return fromDomainToAdapterRest(person, "MariaDB");
 	}
+
 	public PersonaResponse fromDomainToAdapterRestMongo(Person person) {
 		return fromDomainToAdapterRest(person, "MongoDB");
 	}
-	
-	public PersonaResponse fromDomainToAdapterRest(Person person, String database) {
+
+	private PersonaResponse fromDomainToAdapterRest(Person person, String database) {
 		return new PersonaResponse(
-				person.getIdentification()+"", 
-				person.getFirstName(), 
-				person.getLastName(), 
-				person.getAge()+"", 
-				person.getGender().toString(), 
+				String.valueOf(person.getIdentification()),
+				person.getFirstName(),
+				person.getLastName(),
+				String.valueOf(person.getAge()),
+				person.getGender().toString(),
 				database,
-				"OK");
+				"OK"
+		);
 	}
 
 	public Person fromAdapterToDomain(PersonaRequest request) {
-		// TODO Auto-generated method stub
-		return new Person();
+		// TODO: Implement conversion from PersonaRequest to Person domain entity
+		return null;
 	}
-		
 }

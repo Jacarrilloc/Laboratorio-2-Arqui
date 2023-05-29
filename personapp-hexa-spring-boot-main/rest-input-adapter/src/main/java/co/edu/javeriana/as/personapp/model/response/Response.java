@@ -5,15 +5,13 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Response {
-	
 	private String status;
 	private String description;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDateTime date;
 
 	public Response(String status, String description, LocalDateTime date) {
-		super();
 		this.status = status;
 		this.description = description;
 		this.date = date;
@@ -42,7 +40,4 @@ public class Response {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
-	
-	
-
 }

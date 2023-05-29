@@ -22,17 +22,21 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/v1/persona")
 public class PersonaControllerV1 {
-	
+
+	private final PersonaInputAdapterRest personaInputAdapterRest;
+
 	@Autowired
-	private PersonaInputAdapterRest personaInputAdapterRest;
-	
+	public PersonaControllerV1(PersonaInputAdapterRest personaInputAdapterRest) {
+		this.personaInputAdapterRest = personaInputAdapterRest;
+	}
+
 	@ResponseBody
 	@GetMapping(path = "/{database}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<PersonaResponse> personas(@PathVariable String database) {
 		log.info("Into personas REST API");
-			return personaInputAdapterRest.historial(database.toUpperCase());
+		return personaInputAdapterRest.historial(database.toUpperCase());
 	}
-	
+
 	@ResponseBody
 	@PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public PersonaResponse crearPersona(@RequestBody PersonaRequest request) {
