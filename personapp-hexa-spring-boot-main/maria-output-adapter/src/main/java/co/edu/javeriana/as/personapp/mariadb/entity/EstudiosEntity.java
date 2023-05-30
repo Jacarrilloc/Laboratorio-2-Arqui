@@ -14,29 +14,32 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author aasanchez
- */
 @Entity
 @Table(name = "estudios", catalog = "persona_db", schema = "")
-@NamedQueries({ @NamedQuery(name = "EstudiosEntity.findAll", query = "SELECT e FROM EstudiosEntity e"),
+@NamedQueries({
+		@NamedQuery(name = "EstudiosEntity.findAll", query = "SELECT e FROM EstudiosEntity e"),
 		@NamedQuery(name = "EstudiosEntity.findByIdProf", query = "SELECT e FROM EstudiosEntity e WHERE e.estudiosEntityPK.idProf = :idProf"),
 		@NamedQuery(name = "EstudiosEntity.findByCcPer", query = "SELECT e FROM EstudiosEntity e WHERE e.estudiosEntityPK.ccPer = :ccPer"),
 		@NamedQuery(name = "EstudiosEntity.findByFecha", query = "SELECT e FROM EstudiosEntity e WHERE e.fecha = :fecha"),
-		@NamedQuery(name = "EstudiosEntity.findByUniver", query = "SELECT e FROM EstudiosEntity e WHERE e.univer = :univer") })
+		@NamedQuery(name = "EstudiosEntity.findByUniver", query = "SELECT e FROM EstudiosEntity e WHERE e.univer = :univer")
+})
 public class EstudiosEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@EmbeddedId
 	protected EstudiosEntityPK estudiosEntityPK;
+
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
+
 	@Column(length = 50)
 	private String univer;
+
 	@JoinColumn(name = "cc_per", referencedColumnName = "cc", nullable = false, insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private PersonaEntity persona;
+
 	@JoinColumn(name = "id_prof", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private ProfesionEntity profesion;

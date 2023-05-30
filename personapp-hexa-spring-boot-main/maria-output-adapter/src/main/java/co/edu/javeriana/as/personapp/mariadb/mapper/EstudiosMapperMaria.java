@@ -11,6 +11,7 @@ import co.edu.javeriana.as.personapp.domain.Study;
 import co.edu.javeriana.as.personapp.mariadb.entity.EstudiosEntity;
 import co.edu.javeriana.as.personapp.mariadb.entity.EstudiosEntityPK;
 
+
 @Mapper
 public class EstudiosMapperMaria {
 
@@ -47,7 +48,7 @@ public class EstudiosMapperMaria {
 		study.setProfession(profesionMapperMaria.fromAdapterToDomain(estudiosEntity.getProfesion()));
 		study.setGraduationDate(validateGraduationDate(estudiosEntity.getFecha()));
 		study.setUniversityName(validateUniversityName(estudiosEntity.getUniver()));
-		return null;
+		return study;
 	}
 
 	private LocalDate validateGraduationDate(Date fecha) {

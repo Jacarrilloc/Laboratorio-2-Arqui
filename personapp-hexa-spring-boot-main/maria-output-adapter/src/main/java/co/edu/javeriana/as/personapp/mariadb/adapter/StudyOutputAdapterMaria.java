@@ -26,14 +26,14 @@ public class StudyOutputAdapterMaria implements StudyOutputPort {
 
     @Override
     public Study save(Study study) {
-        log.debug("Into save on Adapter MariaDB");
+        log.debug("Iniciando save en Adaptador MariaDB");
         EstudiosEntity persistedEstudios = estudiosRepositoryMaria.save(estudiosMapperMaria.fromDomainToAdapter(study));
         return estudiosMapperMaria.fromAdapterToDomain(persistedEstudios);
     }
 
     @Override
     public Boolean delete(Integer person_identification, Integer profession_identification) {
-        log.debug("Into delete on Adapter MariaDB");
+        log.debug("Iniciando delete en Adaptador MariaDB");
         EstudiosEntityPK estudiosEntityPK = new EstudiosEntityPK(person_identification, profession_identification);
         estudiosRepositoryMaria.deleteById(estudiosEntityPK);
         return estudiosRepositoryMaria.findById(estudiosEntityPK).isEmpty();
@@ -41,14 +41,14 @@ public class StudyOutputAdapterMaria implements StudyOutputPort {
 
     @Override
     public List<Study> find() {
-        log.debug("Into find on Adapter MariaDB");
+        log.debug("Iniciando find en Adaptador MariaDB");
         return estudiosRepositoryMaria.findAll().stream().map(estudiosMapperMaria::fromAdapterToDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Study findById(Integer person_identification, Integer profession_identification) {
-        log.debug("Into findById on Adapter MariaDB");
+        log.debug("Iniciando findById en Adaptador MariaDB");
         EstudiosEntityPK estudiosEntityPK = new EstudiosEntityPK(person_identification, profession_identification);
         if (estudiosRepositoryMaria.findById(estudiosEntityPK).isEmpty()) {
             return null;

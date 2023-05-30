@@ -1,7 +1,6 @@
 package co.edu.javeriana.as.personapp.mariadb.adapter;
 
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -29,33 +28,31 @@ public class PersonOutputAdapterMaria implements PersonOutputPort {
 
 	@Override
 	public Person save(Person person) {
-		log.debug("Into save on Adapter MariaDB");
+		log.debug("Entrando a guardar en Adaptador MariaDB");
 		PersonaEntity persistedPersona = personaRepositoryMaria.save(personaMapperMaria.fromDomainToAdapter(person));
 		return personaMapperMaria.fromAdapterToDomain(persistedPersona);
 	}
 
 	@Override
 	public Boolean delete(Integer identification) {
-		log.debug("Into delete on Adapter MariaDB");
+		log.debug("Entrando a eliminar en Adaptador MariaDB");
 		personaRepositoryMaria.deleteById(identification);
 		return personaRepositoryMaria.findById(identification).isEmpty();
 	}
 
 	@Override
 	public List<Person> find() {
-		log.debug("Into find on Adapter MariaDB");
+		log.debug("Entrando a buscar en Adaptador MariaDB");
 		return personaRepositoryMaria.findAll().stream().map(personaMapperMaria::fromAdapterToDomain)
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Person findById(Integer identification) {
-		log.debug("Into findById on Adapter MariaDB");
-		if (personaRepositoryMaria.findById(identification).isEmpty()) {
-			return null;
-		} else {
-			return personaMapperMaria.fromAdapterToDomain(personaRepositoryMaria.findById(identification).get());
-		}
+		log.debug("Entrando a buscar por ID en Adaptador MariaDB");
+		return personaRepositoryMaria.findById(identification)
+				.map(personaMapperMaria::fromAdapterToDomain)
+				.orElse(null);
 	}
 
 }

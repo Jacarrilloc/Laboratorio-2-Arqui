@@ -5,20 +5,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-/**
- *
- * @author aasanchez
- */
 @Embeddable
 public class EstudiosEntityPK implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
 	@Basic(optional = false)
 	@Column(name = "id_prof", nullable = false)
 	private int idProf;
+
 	@Basic(optional = false)
 	@Column(name = "cc_per", nullable = false)
 	private int ccPer;

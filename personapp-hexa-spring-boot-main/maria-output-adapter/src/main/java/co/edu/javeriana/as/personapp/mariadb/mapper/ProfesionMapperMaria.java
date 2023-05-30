@@ -12,6 +12,7 @@ import co.edu.javeriana.as.personapp.domain.Study;
 import co.edu.javeriana.as.personapp.mariadb.entity.EstudiosEntity;
 import co.edu.javeriana.as.personapp.mariadb.entity.ProfesionEntity;
 
+
 @Mapper
 public class ProfesionMapperMaria {
 

@@ -9,6 +9,7 @@ import co.edu.javeriana.as.personapp.mariadb.entity.PersonaEntity;
 import co.edu.javeriana.as.personapp.mariadb.entity.TelefonoEntity;
 import lombok.NonNull;
 
+
 @Mapper
 public class TelefonoMapperMaria {
 
