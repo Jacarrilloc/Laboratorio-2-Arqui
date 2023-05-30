@@ -3,6 +3,9 @@ package co.edu.javeriana.as.personapp.terminal.menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import co.edu.javeriana.as.personapp.terminal.adapter.PhoneInputAdapterCli;
+import co.edu.javeriana.as.personapp.terminal.adapter.ProfessionInputAdapterCli;
+import co.edu.javeriana.as.personapp.terminal.adapter.StudyInputAdapterCli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -16,6 +19,9 @@ public class MenuPrincipal {
 	//Beans
 	@Autowired
 	private PersonaInputAdapterCli personaInputAdapterCli;
+	private PhoneInputAdapterCli phoneInputAdapterCli;
+	private ProfessionInputAdapterCli professionInputAdapterCli;
+	private StudyInputAdapterCli studyImputAdapterCli;
 
 	private static final int SALIR = 0;
 	private static final int MODULO_PERSONA = 1;
@@ -25,10 +31,16 @@ public class MenuPrincipal {
 
 	//Menus
 	private final PersonaMenu personaMenu;
+	private final PhoneMenu phoneMenu;
+	private final ProfessionMenu professionMenu;
+	private final StudyMenu studyMenu;
 	private final Scanner keyboard;
 
     public MenuPrincipal() {
         this.personaMenu = new PersonaMenu();
+		this.phoneMenu = new PhoneMenu();
+		this.professionMenu = new ProfessionMenu();
+		this.studyMenu = new StudyMenu();
         this.keyboard = new Scanner(System.in);
     }
 
@@ -48,13 +60,16 @@ public class MenuPrincipal {
 				log.info("volvio");
 				break;
 			case MODULO_PROFESION:
-				log.warn("Implementar Menu");
+				professionMenu.iniciarMenu(professionInputAdapterCli,keyboard);
+				log.info("volvio");
 				break;
 			case MODULO_TELEFONO:
-				log.warn("Implementar Menu");
+				phoneMenu.iniciarMenu(phoneInputAdapterCli,keyboard);
+				log.info("volvio");
 				break;
 			case MODULO_ESTUDIO:
-				log.warn("Implementar Menu");
+				studyMenu.iniciarMenu(studyImputAdapterCli,keyboard);
+				log.info("volvio");
 				break;
 			default:
 				log.warn("La opción elegida no es válida.");
@@ -66,12 +81,14 @@ public class MenuPrincipal {
 
 	private void mostrarMenu() {
 		System.out.println("----------------------");
-		System.out.println(MODULO_PERSONA + " para trabajar con el Modulo de Personas");
-		System.out.println(MODULO_PROFESION + " para trabajar con el Modulo de Profesiones");
-		System.out.println(MODULO_TELEFONO + " para trabajar con el Modulo de Telefonos");
-		System.out.println(MODULO_ESTUDIO + " para trabajar con el Modulo de Estudios");
-		System.out.println(SALIR + " para Salir");
+		System.out.println(MODULO_PERSONA + ". Módulo de Personas");
+		System.out.println(MODULO_PROFESION + ". Módulo de Profesiones");
+		System.out.println(MODULO_TELEFONO + ". Módulo de Teléfonos");
+		System.out.println(MODULO_ESTUDIO + ". Módulo de Estudios");
+		System.out.println(SALIR + ". Salir");
+		System.out.println("----------------------");
 	}
+
 
 	private int leerOpcion() {
 		try {

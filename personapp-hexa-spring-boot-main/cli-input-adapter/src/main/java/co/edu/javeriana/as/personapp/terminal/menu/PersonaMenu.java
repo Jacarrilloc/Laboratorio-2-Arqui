@@ -16,7 +16,6 @@ public class PersonaMenu {
 
 	private static final int OPCION_REGRESAR_MOTOR_PERSISTENCIA = 0;
 	private static final int OPCION_VER_TODO = 1;
-	// mas opciones
 
 	public void iniciarMenu(PersonaInputAdapterCli personaInputAdapterCli, Scanner keyboard) {
 		boolean isValid = false;
@@ -71,15 +70,15 @@ public class PersonaMenu {
 	private void mostrarMenuOpciones() {
 		System.out.println("----------------------");
 		System.out.println(OPCION_VER_TODO + " para ver todas las personas");
-		// implementar otras opciones
 		System.out.println(OPCION_REGRESAR_MOTOR_PERSISTENCIA + " para regresar");
 	}
 
 	private void mostrarMenuMotorPersistencia() {
 		System.out.println("----------------------");
-		System.out.println(PERSISTENCIA_MARIADB + " para MariaDB");
-		System.out.println(PERSISTENCIA_MONGODB + " para MongoDB");
-		System.out.println(OPCION_REGRESAR_MODULOS + " para regresar");
+		System.out.println("Seleccione la Base de Datos a Usar:");
+		System.out.println(PERSISTENCIA_MARIADB + " MariaDB");
+		System.out.println(PERSISTENCIA_MONGODB + " MongoDB");
+		System.out.println(OPCION_REGRESAR_MODULOS + " Regresar");
 	}
 
 	private int leerOpcion(Scanner keyboard) {
@@ -91,5 +90,4 @@ public class PersonaMenu {
 			return leerOpcion(keyboard);
 		}
 	}
-
 }

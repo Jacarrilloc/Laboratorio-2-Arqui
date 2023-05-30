@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Profession {

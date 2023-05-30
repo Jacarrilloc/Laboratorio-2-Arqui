@@ -43,12 +43,6 @@ public class PersonaInputAdapterCli {
 		}
 	}
 
-	public void historial1() {
-		log.info("Into historial PersonaEntity in Input Adapter");
-		List<PersonaModelCli> persona = personInputPort.findAll().stream().map(personaMapperCli::fromDomainToAdapterCli)
-					.collect(Collectors.toList());
-		persona.forEach(p -> System.out.println(p.toString()));
-	}
 	public void historial() {
 	    log.info("Into historial PersonaEntity in Input Adapter");
 	    personInputPort.findAll().stream()
