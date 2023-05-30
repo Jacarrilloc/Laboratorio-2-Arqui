@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoWriteException;
 
 import co.edu.javeriana.as.personapp.application.port.out.ProfessionOutputPort;
-import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.domain.Profession;
 import co.edu.javeriana.as.personapp.mongo.document.ProfesionDocument;
 import co.edu.javeriana.as.personapp.mongo.mapper.ProfesionMapperMongo;
@@ -16,22 +16,24 @@ import co.edu.javeriana.as.personapp.mongo.repository.ProfesionRepositoryMongo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Adapter("professionOutputAdapterMongo")
+@Component
 public class ProfessionOutputAdapterMongo implements ProfessionOutputPort {
 
-    @Autowired
-    private ProfesionRepositoryMongo profesionRepositoryMongo;
+    private final ProfesionRepositoryMongo profesionRepositoryMongo;
+    private final ProfesionMapperMongo profesionMapperMongo;
 
     @Autowired
-    private ProfesionMapperMongo profesionMapperMongo;
+    public ProfessionOutputAdapterMongo(ProfesionRepositoryMongo profesionRepositoryMongo, ProfesionMapperMongo profesionMapperMongo) {
+        this.profesionRepositoryMongo = profesionRepositoryMongo;
+        this.profesionMapperMongo = profesionMapperMongo;
+    }
 
     @Override
     public Profession save(Profession profession) {
         log.debug("Into save on Adapter MongoDB");
         try {
-            ProfesionDocument persistedPersona = profesionRepositoryMongo
-                    .save(profesionMapperMongo.fromDomainToAdapter(profession));
-            return profesionMapperMongo.fromAdapterToDomain(persistedPersona);
+            ProfesionDocument persistedProfesion = profesionRepositoryMongo.save(profesionMapperMongo.fromDomainToAdapter(profession));
+            return profesionMapperMongo.fromAdapterToDomain(persistedProfesion);
         } catch (MongoWriteException e) {
             log.warn(e.getMessage());
             return profession;
@@ -48,18 +50,16 @@ public class ProfessionOutputAdapterMongo implements ProfessionOutputPort {
     @Override
     public List<Profession> find() {
         log.debug("Into find on Adapter MongoDB");
-        return profesionRepositoryMongo.findAll().stream().map(profesionMapperMongo::fromAdapterToDomain)
+        return profesionRepositoryMongo.findAll().stream()
+                .map(profesionMapperMongo::fromAdapterToDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Profession findById(Integer identification) {
         log.debug("Into findById on Adapter MongoDB");
-        if (profesionRepositoryMongo.findById(identification).isEmpty()) {
-            return null;
-        } else {
-            return profesionMapperMongo.fromAdapterToDomain(profesionRepositoryMongo.findById(identification).get());
-        }
+        return profesionRepositoryMongo.findById(identification)
+                .map(profesionMapperMongo::fromAdapterToDomain)
+                .orElse(null);
     }
-
 }

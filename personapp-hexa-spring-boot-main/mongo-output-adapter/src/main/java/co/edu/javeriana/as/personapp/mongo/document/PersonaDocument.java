@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,10 +22,10 @@ public class PersonaDocument {
 	private String apellido;
 	private String genero;
 	private Integer edad;
-	@DocumentReference(lazy = true, lookup = "{ 'primaryDuenio' : ?#{#self._id} }")
+	@DBRef(lazy = true)
 	@ReadOnlyProperty
 	private List<TelefonoDocument> telefonos;
-	@DocumentReference(lazy = true, lookup = "{ 'primaryPersona' : ?#{#self._id} }")
+	@DBRef(lazy = true)
 	@ReadOnlyProperty
 	private List<EstudiosDocument> estudios;
 }

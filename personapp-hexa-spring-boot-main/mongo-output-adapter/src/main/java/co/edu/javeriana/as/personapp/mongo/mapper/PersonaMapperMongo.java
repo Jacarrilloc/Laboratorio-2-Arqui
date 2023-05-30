@@ -48,13 +48,13 @@ public class PersonaMapperMongo {
 	private List<EstudiosDocument> validateEstudios(List<Study> studies) {
 		return studies != null && !studies.isEmpty() ? studies.stream()
 				.map(study -> estudiosMapperMongo.fromDomainToAdapter(study)).collect(Collectors.toList())
-				: new ArrayList<EstudiosDocument>();
+				: new ArrayList<>();
 	}
 
 	private List<TelefonoDocument> validateTelefonos(List<Phone> phoneNumbers) {
 		return phoneNumbers != null && !phoneNumbers.isEmpty() ? phoneNumbers.stream()
 				.map(phone -> telefonoMapperMongo.fromDomainToAdapter(phone)).collect(Collectors.toList())
-				: new ArrayList<TelefonoDocument>();
+				: new ArrayList<>();
 	}
 
 	public Person fromAdapterToDomain(PersonaDocument personaDocument) {
@@ -80,12 +80,12 @@ public class PersonaMapperMongo {
 	private List<Study> validateStudies(List<EstudiosDocument> estudiosDocuments) {
 		return estudiosDocuments != null && !estudiosDocuments.isEmpty() ? estudiosDocuments.stream()
 				.map(estudio -> estudiosMapperMongo.fromAdapterToDomain(estudio)).collect(Collectors.toList())
-				: new ArrayList<Study>();
+				: new ArrayList<>();
 	}
 
 	private List<Phone> validatePhones(List<TelefonoDocument> telefonosDocuments) {
 		return telefonosDocuments != null && !telefonosDocuments.isEmpty() ? telefonosDocuments.stream()
 				.map(telefono -> telefonoMapperMongo.fromAdapterToDomain(telefono)).collect(Collectors.toList())
-				: new ArrayList<Phone>();
+				: new ArrayList<>();
 	}
 }

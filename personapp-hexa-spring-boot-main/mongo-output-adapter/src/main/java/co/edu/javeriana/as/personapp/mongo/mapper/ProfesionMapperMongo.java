@@ -14,7 +14,7 @@ import co.edu.javeriana.as.personapp.mongo.document.ProfesionDocument;
 
 @Mapper
 public class ProfesionMapperMongo {
-	
+
 	@Autowired
 	private EstudiosMapperMongo estudiosMapperMongo;
 
@@ -34,7 +34,7 @@ public class ProfesionMapperMongo {
 	private List<EstudiosDocument> validateEstudios(List<Study> studies) {
 		return studies != null && !studies.isEmpty() ? studies.stream()
 				.map(study -> estudiosMapperMongo.fromDomainToAdapter(study)).collect(Collectors.toList())
-				: new ArrayList<EstudiosDocument>();
+				: new ArrayList<>();
 	}
 
 	public Profession fromAdapterToDomain(ProfesionDocument profesionDocument) {
@@ -53,6 +53,6 @@ public class ProfesionMapperMongo {
 	private List<Study> validateStudies(List<EstudiosDocument> estudiosDocument) {
 		return estudiosDocument != null && !estudiosDocument.isEmpty() ? estudiosDocument.stream()
 				.map(estudio -> estudiosMapperMongo.fromAdapterToDomain(estudio)).collect(Collectors.toList())
-				: new ArrayList<Study>();
+				: new ArrayList<>();
 	}
 }

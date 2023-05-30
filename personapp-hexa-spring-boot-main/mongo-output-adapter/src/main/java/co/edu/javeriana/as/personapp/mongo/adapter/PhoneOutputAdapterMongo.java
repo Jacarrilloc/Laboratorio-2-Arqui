@@ -1,9 +1,11 @@
 package co.edu.javeriana.as.personapp.mongo.adapter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoWriteException;
 
@@ -16,21 +18,24 @@ import co.edu.javeriana.as.personapp.mongo.repository.TelefonoRepositoryMongo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 @Adapter("phoneOutputAdapterMongo")
 public class PhoneOutputAdapterMongo implements PhoneOutputPort {
 
-    @Autowired
-    private TelefonoRepositoryMongo telefonoRepositoryMongo;
+    private final TelefonoRepositoryMongo telefonoRepositoryMongo;
+    private final TelefonoMapperMongo telefonoMapperMongo;
 
     @Autowired
-    private TelefonoMapperMongo telefonoMapperMongo;
+    public PhoneOutputAdapterMongo(TelefonoRepositoryMongo telefonoRepositoryMongo, TelefonoMapperMongo telefonoMapperMongo) {
+        this.telefonoRepositoryMongo = telefonoRepositoryMongo;
+        this.telefonoMapperMongo = telefonoMapperMongo;
+    }
 
     @Override
     public Phone save(Phone phone) {
         log.debug("Into save on Adapter MongoDB");
         try {
-            TelefonoDocument persistedTelefono = telefonoRepositoryMongo
-                    .save(telefonoMapperMongo.fromDomainToAdapter(phone));
+            TelefonoDocument persistedTelefono = telefonoRepositoryMongo.save(telefonoMapperMongo.fromDomainToAdapter(phone));
             return telefonoMapperMongo.fromAdapterToDomain(persistedTelefono);
         } catch (MongoWriteException e) {
             log.warn(e.getMessage());
@@ -48,18 +53,15 @@ public class PhoneOutputAdapterMongo implements PhoneOutputPort {
     @Override
     public List<Phone> find() {
         log.debug("Into find on Adapter MongoDB");
-        return telefonoRepositoryMongo.findAll().stream().map(telefonoMapperMongo::fromAdapterToDomain)
+        return telefonoRepositoryMongo.findAll().stream()
+                .map(telefonoMapperMongo::fromAdapterToDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Phone findById(String number) {
         log.debug("Into findById on Adapter MongoDB");
-        if (telefonoRepositoryMongo.findById(number).isEmpty()) {
-            return null;
-        } else {
-            return telefonoMapperMongo.fromAdapterToDomain(telefonoRepositoryMongo.findById(number).get());
-        }
+        Optional<TelefonoDocument> telefonoOptional = telefonoRepositoryMongo.findById(number);
+        return telefonoOptional.map(telefonoMapperMongo::fromAdapterToDomain).orElse(null);
     }
-
 }
